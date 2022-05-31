@@ -21,6 +21,13 @@ body{
     border: 4px double green;
     border-radius: 10px;
     height: 100px;
+    display:flex;
+    justify-content: flex-end;
+}
+
+#result{
+    color: white;
+    font-size: 50px;
 }
 
 #keyboard{
@@ -29,12 +36,14 @@ body{
     border-radius: 10px;
     color: white;
     font-size: larger;
+    font-weight: bolder;
     height: 320px;
     display:flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     flex-direction: column;
     margin: 10px;
+    padding: 5px;
 }
 
 .button{
@@ -47,10 +56,22 @@ body{
     padding: 6px;
 }
 
+.button:hover{
+    background-color: green;
+    border: 5px double darkblue;
+}
+
 .operator{
     background-color: orangered;
+}
+
+.operator:hover{
+    background-color: green;
+    border: 5px double orangered;
 }
 
 #clear, #equals{
     height:100px;
 }
+
+
