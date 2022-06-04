@@ -1,46 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
     <title>Calculator</title>
-    <link rel="stylesheet" href="style.css">
-    
-</head>
-<body>
-    
-    <div id="calculator">
+    <link href="style.css" rel="stylesheet" />
+    <script src="app.js" defer></script>
+  </head>
 
-        <div id="display">
-            <h1 id="result">0</h1>
-        </div>
+  <body>
+    <!--Calculator-->
+    <div class="calculator-grid">
 
-        <div id="keyboard">
-            <!--Digits-->
-            <div class="button" id="zero">0</div>
-            <div class="button" id="one">1</div>
-            <div class="button" id="two">2</div>
-            <div class="button" id="three">3</div>
-            <div class="button" id="four">4</div>
-            <div class="button" id="five">5</div>
-            <div class="button" id="six">6</div>
-            <div class="button" id="seven">7</div>
-            <div class="button" id="eight">8</div>
-            <div class="button" id="nine">9</div>
-            <!--operations-->
-            <div class="button operator" id="posNeg">+/-</div>
-            <div class="button operator" id="percentage">%</div>
-            <div class="button operator" id="add">+</div>
-            <div class="button operator" id="subtract">-</div>
-            <div class="button operator" id="multiply">x</div>
-            <div class="button operator" id="divide">/</div>
-            <div class="button operator" id="equals">=</div>
-            <div class="button operator" id="clear">AC</div>
-        </div>
+      <!--Output-->
+      <div class="output">
+        <div data-previous-operand class="previous-operand"></div>
+        <div data-current-operand class="current-operand"></div>
+      </div>
+      
+      <!--Keyboard-->
+      <button data-all-clear class="span-two">AC</button>
+      <button data-delete>DEL</button>
+      <button data-operation>÷</button>
+      <button data-number>1</button>
+      <button data-number>2</button>
+      <button data-number>3</button>
+      <button data-operation>*</button>
+      <button data-number>4</button>
+      <button data-number>5</button>
+      <button data-number>6</button>
+      <button data-operation>+</button>
+      <button data-number>7</button>
+      <button data-number>8</button>
+      <button data-number>9</button>
+      <button data-operation>-</button>
+      <button data-number>.</button>
+      <button data-number>0</button>
+      <button data-equals class="span-two">=</button>
     </div>
-
-    <script src="app.js"></script>
-</body>
+  </body>
 </html>

@@ -1,59 +1,171 @@
-//operations
-const add = (a, b) => a + b;
-const subtract = (a, b) => a - b;
-const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
-const posNeg = (a) => a * -1;
-const percentage = (a) => a / 100;
+class Calculator {
+  constructor(previousOperandTextElement, currentOperandTextElement) {
+    this.previousOperandTextElement = previousOperandTextElement;
+    this.currentOperandTextElement = currentOperandTextElement;
+    this.clear();
+  }
 
-//Operate, take in an operator, two numbers and evaluate the two numbers with operation
-const operate = (operation, a, b) => {
+  clear() {
+    this.currentOperand = "";
+    this.previousOperand = "";
+    this.operation = undefined;
+  }
 
-    /**
-    * operate(operation, a, b)
-    * how to determine which operation to perform on the two numbers?
-    * operator is going to be determined by which button user presses, so how to apply that button to these numbers and operate with them
-    */
+  delete() {
+    this.currentOperand = this.currentOperand.toString().slice(0, -1);
+  }
 
-    //perform operation on numbers depending on what operation is passed
-    switch(operation) {
-        case 'add':
-          return add(a,b);
-          break;
-        case 'subtract':
-          return subtract(a,b);
-          break;
-        case 'multiply':
-            return multiply(a,b);
-        case 'divide':
-            return divide(a,b);
-      }//end switch
-};//end operate()
+  appendNumber(number) {
+    if (number === "." && this.currentOperand.includes(".")) return;
+    this.currentOperand = this.currentOperand.toString() + number.toString();
+  }
 
+  chooseOperation(operation) {
+    if (this.currentOperand === "") return;
+    if (this.previousOperand !== "") {
+      this.compute();
+    }
+    this.operation = operation;
+    this.previousOperand = this.currentOperand;
+    this.currentOperand = "";
+  }
 
-//display window
-const display = document.getElementById('result');
+  compute() {
+    let computation;
+    const prev = parseFloat(this.previousOperand);
+    const current = parseFloat(this.currentOperand);
+    if (isNaN(prev) || isNaN(current)) return;
+    switch (this.operation) {
+      case "+":
+        computation = prev + current;
+        break;
+      case "-":
+        computation = prev - current;
+        break;
+      case "*":
+        computation = prev * current;
+        break;
+      case "÷":
+        computation = prev / current;
+        break;
+      default:
+        return;
+    }
+    this.currentOperand = computation;
+    this.operation = undefined;
+    this.previousOperand = "";
+  }
 
-//buttons, with event listeners added to them
-const buttons = document.querySelectorAll('.button');
-// for our buttons, on click, display THIS number in the display window, while adding the number to the current instance of operate()
-buttons.forEach(button => {
-    button.addEventListener('click', function(){
+  getDisplayNumber(number) {
+    const stringNumber = number.toString();
+    const integerDigits = parseFloat(stringNumber.split(".")[0]);
+    const decimalDigits = stringNumber.split(".")[1];
+    let integerDisplay;
+    if (isNaN(integerDigits)) {
+      integerDisplay = "";
+    } else {
+      integerDisplay = integerDigits.toLocaleString("en", {
+        maximumFractionDigits: 0,
+      });
+    }
+    if (decimalDigits != null) {
+      return `${integerDisplay}.${decimalDigits}`;
+    } else {
+      return integerDisplay;
+    }
+  }
 
-        console.log(button.id);
-        display.innerHTML = button.innerHTML;//displaying what button was clicked in display window
+  updateDisplay() {
+    this.currentOperandTextElement.innerText = this.getDisplayNumber(
+      this.currentOperand
+    );
+    if (this.operation != null) {
+      this.previousOperandTextElement.innerText = `${this.getDisplayNumber(
+        this.previousOperand
+      )} ${this.operation}`;
+    } else {
+      this.previousOperandTextElement.innerText = "";
+    }
+  }
+}
 
-        //if button is AC, reset back to zero?
-        if(button.id == 'clear'){
-            display.innerHTML = '0';
-            //set back to zero, and also reset ints to be used with operate(), so that data is really reset for user
-        }
+const numberButtons = document.querySelectorAll("[data-number]");
+const operationButtons = document.querySelectorAll("[data-operation]");
+const equalsButton = document.querySelector("[data-equals]");
+const deleteButton = document.querySelector("[data-delete]");
+const allClearButton = document.querySelector("[data-all-clear]");
+const previousOperandTextElement = document.querySelector(
+  "[data-previous-operand]"
+);
+const currentOperandTextElement = document.querySelector(
+  "[data-current-operand]"
+);
 
+const calculator = new Calculator(
+  previousOperandTextElement,
+  currentOperandTextElement
+);
 
-    });
+numberButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    calculator.appendNumber(button.innerText);
+    calculator.updateDisplay();
+  });
 });
 
+operationButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    calculator.chooseOperation(button.innerText);
+    calculator.updateDisplay();
+  });
+});
 
+equalsButton.addEventListener("click", (button) => {
+  calculator.compute();
+  calculator.updateDisplay();
+});
 
+allClearButton.addEventListener("click", (button) => {
+  calculator.clear();
+  calculator.updateDisplay();
+});
 
+deleteButton.addEventListener("click", (button) => {
+  calculator.delete();
+  calculator.updateDisplay();
+});
 
+document.addEventListener("keydown", function (event) {
+  let patternForNumbers = /[0-9]/g;
+  let patternForOperators = /[+\-*\/]/g;
+  if (event.key.match(patternForNumbers)) {
+    event.preventDefault();
+    calculator.appendNumber(event.key);
+    calculator.updateDisplay();
+  }
+  if (event.key === ".") {
+    event.preventDefault();
+    calculator.appendNumber(event.key);
+    calculator.updateDisplay();
+  }
+  if (event.key.match(patternForOperators)) {
+    event.preventDefault();
+    calculator.chooseOperation(event.key);
+    calculator.updateDisplay();
+  }
+  if (event.key === "Enter" || event.key === "=") {
+    event.preventDefault();
+    calculator.compute();
+    calculator.updateDisplay();
+  }
+  if (event.key === "Backspace") {
+    event.preventDefault();
+    calculator.delete();
+    calculator.updateDisplay();
+  }
+  if (event.key == "Delete") {
+    event.preventDefault();
+    calculator.clear();
+    calculator.updateDisplay();
+  }
+});
