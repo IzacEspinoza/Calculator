@@ -12,7 +12,6 @@ body{
     flex-direction: column;
 }
 #title{
-    border: 5px dotted black;
     text-align: center;
     padding: 5px;
     font-size: 20px;
@@ -23,16 +22,15 @@ body{
 #container{
     width: 50%;
     height: auto;
-    border: 5px dotted black;
     margin: 20px;
     display: flex;
     justify-content: center;
     padding: 20px;
 }
 #calculator{
-    border: 5px solid red;
+    border: 20px double black;
     border-radius: 10px;
-    width: 50%;
+    width: 200px;
     height: 50%;
     background-color: blue;
     padding: 10px;
@@ -43,17 +41,21 @@ body{
 }
 #display{
     width: 80%;
-    height: 20px;
+    height: 50px;
     margin: 5px;
     padding: 5px;
-    border: 2px dotted red;
+    border: 5px solid green;
+    border-radius: 5px;
     background-color: aquamarine;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 #button-grid{
     width: 80%;
     height: auto;
     padding: 5px;
-    border: 2px dotted white;
+    border: 5px solid black;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 50px 50px 50px 50px 50px;
