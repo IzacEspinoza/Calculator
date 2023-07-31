@@ -60,3 +60,10 @@ body{
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 50px 50px 50px 50px 50px;
 }
+#button-grid .function{
+    background-color: orange;
+}
+#button-grid button:hover{
+    border: 3px green solid;
+    background-color: aqua;
+}
