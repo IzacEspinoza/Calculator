@@ -36,3 +36,18 @@ const calculate = (num1, operator, num2) => {
             console.log('Sorry couldnt figure it out');
     }
 };
+
+//Displaying to DOM functions
+
+//display port
+const display = document.getElementById('display');
+
+//Show buttons value on clicking them
+const buttons = document.querySelectorAll('button');
+buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+        //console.log(button.textContent);
+        display.textContent = button.textContent;
+    });
+});
+
